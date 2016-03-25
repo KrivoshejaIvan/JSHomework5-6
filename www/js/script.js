@@ -20,7 +20,7 @@ var MyTimer  = {
 
     Proceed: function () {
         MyTimer.proceedTimerID = setInterval(function () {
-            var t = this.prevTime + this.startTime + this.currTime;
+            var t = MyTimer.prevTime - MyTimer.startTime + MyTimer.currTime;
             var ms = t % 1000;
             t = (t/1000) >>0;
             var s = t % 60;
@@ -39,15 +39,31 @@ var MyTimer  = {
       MyTimer.startTimerID = setInterval(function() {
           var t = new Date();
           MyTimer.currTime = Date.parse(t) + t.getMilliseconds();
-      },6)
+      },6);
+      MyTimer.stopButton.style.display= 'block';
+      MyTimer.startButton.style.display= 'none';
     },
     StopFunction: function () {
         clearInterval(MyTimer.startTimerID);
         var t = new Date();
-        MyTimer.startTime = Date.parse(t) + t.getMilliseconds();
+        MyTimer.currTime = Date.parse(t) + t.getMilliseconds();
         MyTimer.prevTime = MyTimer.prevTime + MyTimer.currTime - MyTimer.startTime;
         MyTimer.currTime = 0;
         MyTimer.startTime = 0;
+        MyTimer.stopButton.style.display= 'none';
+        MyTimer.startButton.style.display= 'block';
+    },
+    ResetFunction: function () {
+        clearInterval(MyTimer.startTimerID);
+        var t = new Date();
+        MyTimer.prevTime = Date.parse(t) + t.getMilliseconds();
+        MyTimer.currTime = 0;
+        MyTimer.startTime = 0;
+        MyTimer.prevTime = 0;
+        MyTimer.prevTime = MyTimer.prevTime - MyTimer.currTime;
+        MyTimer.stopButton.style.display= 'none';
+        MyTimer.startButton.style.display= 'block';
+
     },
 
     MainCreate: function () {
@@ -66,7 +82,8 @@ var MyTimer  = {
         MyTimer.startButton.setAttribute('type','submit');
         MyTimer.startButton.setAttribute('value', 'start');
         MyTimer.main.appendChild(MyTimer.startButton);
-        MyTimer.startButton.setAttribute('onclick', MyTimer.StartFunction ());
+        MyTimer.startButton.setAttribute('onclick', 'MyTimer.StartFunction()');
+
     },
 
     ResetButtonCreate: function () {
@@ -75,6 +92,7 @@ var MyTimer  = {
         MyTimer.resetButton.setAttribute('type','submit');
         MyTimer.resetButton.setAttribute('value', 'reset');
         MyTimer.main.appendChild(MyTimer.resetButton);
+        MyTimer.resetButton.setAttribute('onclick', 'MyTimer.ResetFunction()');
     },
     StopButtonCreate: function () {
         MyTimer.stopButton=document.createElement('input');
@@ -82,7 +100,7 @@ var MyTimer  = {
         MyTimer.stopButton.setAttribute('type','submit');
         MyTimer.stopButton.setAttribute('value', 'stop');
         MyTimer.main.appendChild(MyTimer.stopButton);
-        MyTimer.stopButton.setAttribute('onclick', MyTimer.StopFunction ());
+        MyTimer.stopButton.setAttribute('onclick', 'MyTimer.StopFunction()');
     },
 
     Create: function () {
@@ -92,8 +110,5 @@ var MyTimer  = {
         MyTimer.ResetButtonCreate();
         MyTimer.StopButtonCreate();
         MyTimer.Proceed();
-        MyTimer.StartFunction();
-        MyTimer.StopFunction();
-
     }
 }

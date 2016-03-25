@@ -8,17 +8,19 @@
     font-size: 50px;
     position: absolute;
     top: 255px;
-    left: 482px;
+    left: 691px;
 }
 .resetButton  {
     font-size: 50px;
     position: absolute;
     top: 255px;
-    left: 594px;
+    left: 518px;
 }
 .stopButton  {
+    display: none;
     font-size: 50px;
     position: absolute;
     top: 255px;
-    left: 720px;
+    left: 691px;
 }
+
